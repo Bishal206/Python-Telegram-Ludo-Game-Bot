@@ -3,3 +3,4 @@ tgcrypto
 python-dotenv
 pillow
 numpy
+python-telegram-bot
