@@ -362,7 +362,8 @@ def main() -> None:
     application.add_handler(CommandHandler("newgame", newgame))
     application.add_handler(CommandHandler("cancelgame", cancelgame))
     application.add_handler(CallbackQueryHandler(join_game, pattern="join"))
-    application.add_handler(CallbackQueryHandler(receive_button_answer))
+    application.add_handler(CallbackQueryHandler(start_group_game, pattern="start_game"))
+    application.add_handler(CallbackQueryHandler(receive_button_answer, pattern="(rolled|0|1|2|3|4|5|6|cng)))
     application.add_handler(PollAnswerHandler(receive_poll_answer))
     # Run the bot until the user presses Ctrl-C
     application.run_polling(allowed_updates=Update.ALL_TYPES)
