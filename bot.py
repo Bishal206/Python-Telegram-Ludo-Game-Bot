@@ -27,8 +27,8 @@ logging.getLogger("httpx").setLevel(logging.INFO)
 
 logger = logging.getLogger(__name__)
 
-queue_players = set()
-playing = set()
+lobbies = {}
+playing_groups = set()
 board_genarator = generate()
 color = ["Blue","Red","Green","Yellow"]
 
@@ -262,8 +262,92 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def _start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     asyncio.create_task(start(update, context))
 
-# create_poll_and_get_answer(update, context, update.effective_chat.id, question, options, wait_period, True)
+async def newgame(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    chat_id = update.effective_chat.id
 
+    if chat_id in lobbies:
+        await update.message.reply_text(
+            "A game lobby already exists."
+        )
+        return
+
+    lobbies[chat_id] = {
+        "players": [],
+        "started": False
+    }
+
+    keyboard = [
+        [InlineKeyboardButton(
+            "🎮 Join Game",
+            callback_data="join"
+        )]
+    ]
+
+    await update.message.reply_text(
+        "Ludo lobby created.\nPlayers: 0/4",
+        reply_markup=InlineKeyboardMarkup(keyboard)
+    )
+
+async def join_game(update, context):
+    query = update.callback_query
+
+    chat_id = query.message.chat.id
+    user = query.from_user
+
+    if chat_id not in lobbies:
+        return
+
+    players = lobbies[chat_id]["players"]
+
+    if user.id not in players:
+        players.append(user.id)
+
+    await query.answer(
+        f"Joined ({len(players)}/4)"
+    )
+
+    if len(players) >= 2:
+        keyboard = [
+            [InlineKeyboardButton(
+                "▶ Start",
+                callback_data="start_game"
+            )]
+        ]
+
+        await query.message.edit_text(
+            f"Players joined: {len(players)}/4",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+async def start_group_game(
+    update,
+    context
+):
+    query = update.callback_query
+
+    chat_id = query.message.chat.id
+
+    players = lobbies[chat_id]["players"]
+
+    if len(players) < 2:
+        await query.answer(
+            "Need at least 2 players"
+        )
+        return
+
+    await query.message.reply_text(
+        f"Starting game with {len(players)} players"
+    )
+
+    game_instance = game(
+        len(players)
+    )
+
+    await run_game(
+        update,
+        context,
+        players,
+        game_instance
+    )
 
 import os
 from telegram.ext import Application, CommandHandler
@@ -275,9 +359,11 @@ def main() -> None:
 
     application = Application.builder().token(TOKEN).build()
     
-    application.add_handler(CommandHandler("start", _start))
-    application.add_handler(PollAnswerHandler(receive_poll_answer))
+    application.add_handler(CommandHandler("newgame", newgame))
+    application.add_handler(CommandHandler("cancelgame", cancelgame))
+    application.add_handler(CallbackQueryHandler(join_game, pattern="join"))
     application.add_handler(CallbackQueryHandler(receive_button_answer))
+    application.add_handler(PollAnswerHandler(receive_poll_answer))
     # Run the bot until the user presses Ctrl-C
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
