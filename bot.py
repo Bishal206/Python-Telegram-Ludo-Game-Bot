@@ -348,7 +348,13 @@ async def start_group_game(
         players,
         game_instance
     )
+from telegram import Update
+from telegram.ext import ContextTypes
 
+async def cancelgame(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "Game cancelled."
+    )
 import os
 from telegram.ext import Application, CommandHandler
 
