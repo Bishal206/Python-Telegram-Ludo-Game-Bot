@@ -38,26 +38,6 @@ class game(object):
 
 		self.guti_can_be_moved = []
 
-	def some_function(self):
-		player = 1
-		current_player = self.current_player
-
-    players = [current_player]
-
-    current_player = self.next_player(current_player)
-
-    while current_player != players[0]:
-        players.append(current_player)
-        current_player = self.next_player(current_player)
-
-    players.sort()
-
-    return [
-        players,
-        self.current_player,
-        self.current_condition,
-        self.position_self
-    ]
 	def dice(self, value):
 		if(self.dice_pending_moves and self.current_condition == self.dice_move):
 			if (value == 0): value = self.rand()
