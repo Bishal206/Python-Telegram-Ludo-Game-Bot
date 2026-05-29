@@ -28,10 +28,10 @@ class game(object):
 		self.position = [0]
 		self.position_self = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 		
-		if (players != 2 and players != 4): players = 4
+		if players not in [2,3,4]: players = 4
 		self.players = players
-		if (players == 2): self.player_shift = 2
-		elif (players == 4): self.player_shift = 1
+		if players == 2: self.player_shift = 2
+		else: players == 4: self.player_shift = 1
 		self.current_player = 0
 		self.count_six = 0
 		self.current_condition = self.dice_move
@@ -42,10 +42,18 @@ class game(object):
 		current_player = self.current_player
 		players = [current_player]
 		current_player = self.next_player(current_player)
-		while current_player != players[0]:
-			players.append(current_player)
-			current_player = self.next_player(current_player)
+		players =[]
+
+		p = self.current_player
+		for _ in range(self.players):
+			players.append({
+				"id": user.id,
+				"name": user.first_name
+			})
+			p = self.next_player(p)
+			
 		players.sort()
+		
 		return [players, self.current_player, self.current_condition, self.position_self]
 	def dice(self, value):
 		if(self.dice_pending_moves and self.current_condition == self.dice_move):
