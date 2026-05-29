@@ -265,8 +265,10 @@ async def _start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 # create_poll_and_get_answer(update, context, update.effective_chat.id, question, options, wait_period, True)
 
 
-    import os
-    TOKEN = os.getenv("TOKEN")
+import os
+from telegram.ext import Application, commandHandler
+
+TOKEN = os.getenv("TOKEN")
 
 def main() -> None:
     """Run bot."""
