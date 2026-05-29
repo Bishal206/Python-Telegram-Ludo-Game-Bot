@@ -266,7 +266,7 @@ async def _start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 import os
-from telegram.ext import Application, commandHandler
+from telegram.ext import Application, CommandHandler
 
 TOKEN = os.getenv("TOKEN")
 
