@@ -31,7 +31,7 @@ class game(object):
 		if players not in [2,3,4]: players = 4
 		self.players = players
 		if players == 2: self.player_shift = 2
-		else: players == 4: self.player_shift = 1
+		elif: players == 4: self.player_shift = 1
 		self.current_player = 0
 		self.count_six = 0
 		self.current_condition = self.dice_move
