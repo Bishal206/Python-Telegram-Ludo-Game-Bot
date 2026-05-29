@@ -270,6 +270,9 @@ async def _start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 def main() -> None:
     """Run bot."""
+
+    application = Application.builder().token(TOKEN).build()
+    
     application.add_handler(CommandHandler("start", _start))
     application.add_handler(PollAnswerHandler(receive_poll_answer))
     application.add_handler(CallbackQueryHandler(receive_button_answer))
