@@ -38,8 +38,9 @@ class game(object):
 
 		self.guti_can_be_moved = []
 
-	def status(self):
-    current_player = self.current_player
+	def some_function(self):
+		player = 1
+		current_player = self.current_player
 
     players = [current_player]
 
