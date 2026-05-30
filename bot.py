@@ -324,6 +324,10 @@ else:
 
 await query.answer(f"Joined ({len(players)}/4)")
 
+if len(players) >= 4:
+    await query.answer("lobby is full")
+    return
+    
 async def start_group_game(
     update,
     context
