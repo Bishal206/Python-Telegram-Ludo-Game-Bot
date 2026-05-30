@@ -313,7 +313,7 @@ async def join_game(update, context):
         )
     )
     if len(players) < 2:
-    keyboard = [[InlineKeyboardButton("▶ Start", callback_data="start_game")]]
+        keyboard = [[InlineKeyboardButton("▶ Start", callback_data="start_game")]]
     await query.message.edit_text(
         f"Players joined: {len(players)}/4",
         reply_markup=InlineKeyboardMarkup([
