@@ -303,24 +303,27 @@ async def join_game(update, context):
     players = lobbies[chat_id]["players"]
 
     if user.id not in players:
-        players.append(user.id)
+    players.append(user.id)
 
-    await query.answer(
-        f"Joined ({len(players)}/4)"
+if len(players) < 2:
+    await query.message.edit_text(
+        f"Players joined: {len(players)}/4",
+        reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton("🎮 Join Game", callback_data="join")]
+        ])
+    )
+else:
+    keyboard = [
+        [InlineKeyboardButton("▶ Start", callback_data="start_game")]
+    ]
+
+    await query.message.edit_text(
+        f"Players joined: {len(players)}/4",
+        reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
-    if len(players) >= 2:
-        keyboard = [
-            [InlineKeyboardButton(
-                "▶ Start",
-                callback_data="start_game"
-            )]
-        ]
+await query.answer(f"Joined ({len(players)}/4)")
 
-        await query.message.edit_text(
-            f"Players joined: {len(players)}/4",
-            reply_markup=InlineKeyboardMarkup(keyboard)
-        )
 async def start_group_game(
     update,
     context
