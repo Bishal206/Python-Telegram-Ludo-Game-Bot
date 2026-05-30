@@ -29,6 +29,9 @@ logger = logging.getLogger(__name__)
 
 lobbies = {}
 playing_groups = set()
+
+queue_players = set()
+playing = set()
 board_genarator = generate()
 color = ["Blue","Red","Green","Yellow"]
 
@@ -370,7 +373,6 @@ def main() -> None:
     application = Application.builder().token(TOKEN).build()
 
     application.add_handler(CommandHandler("test", test))
-    application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("newgame", newgame))
     application.add_handler(CommandHandler("cancelgame", cancelgame))
     application.add_handler(CallbackQueryHandler(join_game, pattern="join"))
