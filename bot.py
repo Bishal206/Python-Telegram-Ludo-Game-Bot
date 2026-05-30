@@ -303,7 +303,7 @@ async def join_game(update, context):
     players = lobbies[chat_id]["players"]
 
     if user.id not in players:
-    players.append(user.id)
+        players.append(user.id)
 
 if len(players) < 2:
     await query.message.edit_text(
