@@ -320,7 +320,7 @@ async def join_game(update, context):
             [InlineKeyboardButton("🎮 Join Game", callback_data="join")]
         ])
     )
-else:
+else
     keyboard = [
         [InlineKeyboardButton("▶ Start", callback_data="start_game")]
     ]
