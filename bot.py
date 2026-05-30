@@ -317,9 +317,7 @@ if len(players) < 2:
     await query.message.edit_text(
         f"Players joined: {len(players)}/4",
         reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("🎮 Join Game", callback_data="join")]
-        ])
-    )
+            [InlineKeyboardButton("🎮 Join Game", callback_data="join")]]))
 else: keyboard = [
         [InlineKeyboardButton("▶ Start", callback_data="start_game")]
     ]
