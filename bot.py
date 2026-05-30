@@ -355,6 +355,10 @@ async def cancelgame(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Game cancelled."
     )
+
+async def test(update: Update, context:ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("bot working")
+    
 import os
 from telegram.ext import Application, CommandHandler
 
@@ -364,7 +368,9 @@ def main() -> None:
     """Run bot."""
 
     application = Application.builder().token(TOKEN).build()
-    
+
+    application.add_handler(CommandHandler("test", test))
+    application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("newgame", newgame))
     application.add_handler(CommandHandler("cancelgame", cancelgame))
     application.add_handler(CallbackQueryHandler(join_game, pattern="join"))
