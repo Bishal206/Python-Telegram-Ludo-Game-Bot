@@ -312,7 +312,7 @@ async def join_game(update, context):
             [[InlineKeyboardButton9("🎮 Join Game", callback_data="join")]]
         )
     )
-    if len(players) < 2:
+if len(players) < 2:
         keyboard = [[InlineKeyboardButton("▶ Start", callback_data="start_game")]]
     await query.message.edit_text(
         f"Players joined: {len(players)}/4",
@@ -320,8 +320,7 @@ async def join_game(update, context):
             [InlineKeyboardButton("🎮 Join Game", callback_data="join")]
         ])
     )
-else
-    keyboard = [
+else: keyboard = [
         [InlineKeyboardButton("▶ Start", callback_data="start_game")]
     ]
 
@@ -329,8 +328,8 @@ else
         f"Players joined: {len(players)}/4",
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
-
-await query.answer(f"Joined ({len(players)}/4)")
+    
+    await query.answer(f"Joined ({len(players)}/4)")
 
 if len(players) >= 4:
     await query.answer("lobby is full")
