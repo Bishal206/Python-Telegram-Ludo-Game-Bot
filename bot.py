@@ -324,12 +324,12 @@ else: keyboard = [
         [InlineKeyboardButton("▶ Start", callback_data="start_game")]
     ]
 
-    await query.message.edit_text(
+await query.message.edit_text(
         f"Players joined: {len(players)}/4",
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
     
-    await query.answer(f"Joined ({len(players)}/4)")
+   await query.answer(f"Joined ({len(players)}/4)")
 
 if len(players) >= 4:
     await query.answer("lobby is full")
